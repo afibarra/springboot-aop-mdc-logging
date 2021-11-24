@@ -50,11 +50,11 @@ public class MdcContextAop {
 
         if (StringUtils.isBlank(functionName)) {
             functionName =
-                getClassName(signature.getDeclaringTypeName()) + ">>" + signature.getMethod()
+                getClassName(signature.getDeclaringTypeName()) + "." + signature.getMethod()
                     .getName();
         }
 
-        MDC.put(METHOD_NAME, "[" + functionName + "]");
+        MDC.put(METHOD_NAME, functionName);
     }
 
     private void setMdcMethod(ProceedingJoinPoint joinPoint) {
@@ -65,10 +65,10 @@ public class MdcContextAop {
         String functionName = annotation.methodName();
 
         if (StringUtils.isBlank(functionName)) {
-            functionName = getClassName(signature.getDeclaringTypeName()) + ">>" + method.getName();
+            functionName = getClassName(signature.getDeclaringTypeName()) + "." + method.getName();
         }
 
-        MDC.put(METHOD_NAME, "[" + functionName + "]");
+        MDC.put(METHOD_NAME, functionName);
     }
 
     private String getClassName(String classFullName) {

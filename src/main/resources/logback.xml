@@ -1,22 +1,30 @@
 <configuration>
-<!--  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
-<!--      <pattern>%-4r [%t] %5p %c{1} - %m - tx.id=%X{transaction.id} tx.owner=%X{transaction.owner}%n</pattern>-->
+<!--  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--      <level>DEBUG</level>-->
+<!--    </filter>-->
+<!--    <encoder>-->
+<!--&lt;!&ndash;      <pattern>%d %-5level - %prefix(%thread :: %X{methodName}) %C{0} %L : %msg%n</pattern>&ndash;&gt;-->
+<!--      <pattern>%d %-5level - %prefix(%thread :: %X{methodName} :: %C{0} :: %L) :: %msg%n</pattern>-->
 <!--    </encoder>-->
 <!--  </appender>-->
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>DEBUG</level>
-    </filter>
-    <encoder>
-<!--      <pattern>%d %-5level %X{genericID} %X{methodName} %C{0} %L : %msg%n</pattern>-->
-      <pattern>%-4r [%t] %5p %c{1} - %X{methodName} %C{0} %L : %msg%n</pattern>-->
-
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+<!--      <pattern>%d %-5level - %prefix(%thread :: %X{methodName} :: %C{1} :: %L) :: %msg%n</pattern>-->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %X{methodName} %-5level %logger{108} - %msg%n</pattern>
     </encoder>
   </appender>
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT"/>
   </root>
+
+<!--  <logger name="me.afibarra.*" level="DEBUG" additivity="false">-->
+<!--    <appender-ref ref="STDOUT" />-->
+<!--  </logger>-->
+
+<!--  <logger name="org.springframework" level="INFO" additivity="false">-->
+<!--    <appender-ref ref="STDOUT" />-->
+<!--  </logger>-->
 </configuration>
