@@ -1,7 +1,6 @@
 package me.afibarra.mdc.aop;
 
 import java.lang.reflect.Method;
-import me.afibarra.mdc.annotations.MdcClass;
 import me.afibarra.mdc.annotations.MdcMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MdcContextAop {
 
-    private static final String METHOD_NAME = "methodName";
+    private static final String MESSAGE_ID = "messageid";
 
     @Around("classAnnotatedWithMdc()")
     public Object aroundAnnotatedClass(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -44,17 +43,18 @@ public class MdcContextAop {
     private void setMdcClass(ProceedingJoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Class clazz = signature.getDeclaringType();
-        MdcClass annotation = (MdcClass) clazz.getAnnotation(MdcClass.class);
+//        MdcClass annotation = (MdcClass) clazz.getAnnotation(MdcClass.class);
+//
+//        String functionName = annotation.methodName();
+//
+//        if (StringUtils.isBlank(functionName)) {
+//            functionName =
+//                getClassName(signature.getDeclaringTypeName()) + "." + signature.getMethod()
+//                    .getName();
+//        }
 
-        String functionName = annotation.methodName();
-
-        if (StringUtils.isBlank(functionName)) {
-            functionName =
-                getClassName(signature.getDeclaringTypeName()) + "." + signature.getMethod()
-                    .getName();
-        }
-
-        MDC.put(METHOD_NAME, functionName);
+//        MDC.put(MESSAGE_ID, functionName);
+        MDC.put(MESSAGE_ID, "MDC: " + clazz.getName() + "." + signature.getMethod().getName());
     }
 
     private void setMdcMethod(ProceedingJoinPoint joinPoint) {
@@ -68,7 +68,7 @@ public class MdcContextAop {
             functionName = getClassName(signature.getDeclaringTypeName()) + "." + method.getName();
         }
 
-        MDC.put(METHOD_NAME, functionName);
+        MDC.put(MESSAGE_ID, functionName);
     }
 
     private String getClassName(String classFullName) {
